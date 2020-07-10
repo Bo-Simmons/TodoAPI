@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using TodoAPI.Models;
+using Microsoft.AspNetCore.HealthChecks;
 
 namespace TodoAPI
 {
@@ -28,6 +29,9 @@ namespace TodoAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            services.AddHealthChecks();
+            // services.AddHealthChecks().AddSqlServer(opt)
+            // services.AddHealthChecks().AddSqlServer(;
             services.AddControllers();
         }
 
@@ -48,6 +52,7 @@ namespace TodoAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health-middleware");
             });
         }
     }
