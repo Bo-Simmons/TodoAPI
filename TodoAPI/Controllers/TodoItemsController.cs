@@ -15,7 +15,7 @@ namespace TodoAPI.Controllers
     {
         private readonly TodoContext _context;
 
-        public TodoContext DbContext => _context;
+        // public TodoContext DbContext => _context;
 
         public TodoItemsController(TodoContext context)
         {
