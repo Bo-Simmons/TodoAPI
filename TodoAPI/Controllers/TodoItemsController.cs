@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TodoAPI.Models;
 
 namespace TodoAPI.Controllers
@@ -27,6 +28,12 @@ namespace TodoAPI.Controllers
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
             return await _context.TodoItems.ToListAsync();
+        }
+
+        [HttpGet("connectionstring")]
+        public string GetConnectionString()
+        {
+            return _context.connectionString;
         }
 
         // GET: api/TodoItems/5

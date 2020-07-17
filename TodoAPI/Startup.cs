@@ -13,6 +13,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using TodoAPI.Models;
 using Microsoft.AspNetCore.HealthChecks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http;
+using TodoAPI.HealthChecks;
 
 namespace TodoAPI
 {
@@ -29,9 +33,13 @@ namespace TodoAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+
+            // This is for ASP.NET health check middle ware
             services.AddHealthChecks();
+            services.AddHealthChecks().AddCheck<MemoryHealthCheck>("Memory");
             // services.AddHealthChecks().AddSqlServer(opt)
             // services.AddHealthChecks().AddSqlServer(;
+            
             services.AddControllers();
         }
 
@@ -49,10 +57,19 @@ namespace TodoAPI
 
             app.UseAuthorization();
 
+            // This is for ASP.NET health check middle ware
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health-middleware");
+                endpoints.MapHealthChecks("/health-middleware", new HealthCheckOptions()
+                {
+                    ResultStatusCodes =
+                    {
+                        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                        [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                        [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+                    }
+                });
             });
         }
     }
