@@ -17,7 +17,7 @@ namespace TodoAPI.HealthChecks
             double percentUsed = 100 * metrics.Used / metrics.Total;
 
             HealthStatus status = HealthStatus.Healthy;
-            if (percentUsed > 50)
+            if (percentUsed > 80)
                 status = HealthStatus.Degraded;
 
             Dictionary<string, object> data = new Dictionary<string, object>();

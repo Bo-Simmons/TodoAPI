@@ -39,7 +39,7 @@ namespace TodoAPI
             services.AddHealthChecks().AddCheck<MemoryHealthCheck>("Memory");
             // services.AddHealthChecks().AddSqlServer(opt)
             // services.AddHealthChecks().AddSqlServer(;
-            
+
             services.AddControllers();
         }
 

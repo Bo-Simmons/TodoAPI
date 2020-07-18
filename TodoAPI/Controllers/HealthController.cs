@@ -59,7 +59,7 @@ namespace TodoAPI.Controllers
             MemoryMetrics mm = getWindowsMemMetrics();
 
             double percentUsed = 100 * mm.Used / mm.Total;
-            if (percentUsed > 50)
+            if (percentUsed > 80)
                 h.Status = "Degraded";
 
             Dictionary<string, string> data = new Dictionary<string, string>();
