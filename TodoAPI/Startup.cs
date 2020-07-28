@@ -66,9 +66,11 @@ namespace TodoAPI
                     ResultStatusCodes =
                     {
                         [HealthStatus.Healthy] = StatusCodes.Status200OK,
-                        [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                        [HealthStatus.Degraded] = 218, //
                         [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
-                    }
+                    },
+                    // Disable response writer
+                    ResponseWriter = null
                 });
             });
         }
